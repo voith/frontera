@@ -38,9 +38,8 @@ class Consumer(BaseStreamConsumer):
                     partitions=self._partition_ids,
                     buffer_size=1048576,
                     max_buffer_size=10485760)
-            except BrokerResponseError:
-                self._cons = None
-                logger.warning("Could not connect consumer to Kafka server")
+            except BrokerResponseError, err:
+                logger.warning("Could not connect consumer to Kafka server %s (%s)", err, type(err))
                 return False
         return True
 
